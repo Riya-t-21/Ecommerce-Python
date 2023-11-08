@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-mx9)%0aeb=yu*3h!a#^ozli6i!l(o7559epvnjbo#%s@%3=a6n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['13.127.147.137', '0.0.0.0','127.0.0.1']
 
 
 # Application definition
@@ -127,4 +127,7 @@ LOGIN_REDIRECT_URL = '/profile/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+RAZOR_KEY_ID = 'rzp_test_LxNHKJOmxcjVbz'
+RAZOR_KEY_SECRET = 'Ygnib2u8VLURu7Vw1ilw5U4L'
   

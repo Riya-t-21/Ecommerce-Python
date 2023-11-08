@@ -52,7 +52,7 @@
                 <div class="text-end">
                     {% comment %} <button type="submit" class="btn btn-warning mt-3 px-5 fw-bold">Continue</button> {% endcomment %}
                     {% comment %} <div id="paypal-button-container"></div> {% endcomment %}
-                    <button id="rzp-button1" type="submit" class="btn btn-warning mt-3 px-5 fw-bold">Payment</button>
+                    <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_MxsvJCdQwkHOgI" async> </script> </form>
                 </div>
             </form>
         </div>
@@ -63,8 +63,35 @@
 {% block payment-gateway %}
     <script>
         var options = {
-            "key": "rzp_test_RJjhMjAzrIgofs"
+            "key": "rzp_test_LxNHKJOmxcjVbz", // enter the key generated from the dashboard
+            "amount": "{{razoramount}}", //amount is in currency subunits. Default currency is "INR". Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Neel Products",
+            "description": "Purchase product",
+            "order_id": "{{order_id}}", //this is a sample order id. Pass the 'id' obtained in the response of step 1
+            "handler": function(response){
+                console.log("success");
+                  var form = document.getElementById("myform");
+                  //alert(form.elements["custid"].value);
+                  //alert(response.razorpay_payment_id);
+                  //alert(response.razorpay_order_id);
+                  //alert(response.razorpay_signature);
+                  window.location.href = "http://localhost:8000/paymentdone?order_id=${response.razorpay_order_id}&payment_id=${response.razorpay_payment_id}&cust_id=${form.elements["custid"].value}"
+            
+            },
+            "theme": {
+                colors: "#3399cc"
+            }      
         };
+        var rzp1 = new Razorpay(options);
+        rzp1.on('payment.failed', function(response) {
+            alert(response.error.description);
+        });
+        document.getElementById('rzp-button1').onclick = function(e) {
+            console.log("button click");
+            rzp1.open();
+            e.preventDefault();
+        }
     </script>
 
 {% endblock payment-gateway %}
